@@ -1,0 +1,17 @@
+/* 回顶部 */
+#toTop {
+    width: 100px;
+    height: 30px;
+    background: yellowgreen;
+    color: white;
+    text-align: center;
+    line-height: 30px;
+    position: fixed; /*使用固定定位*/
+    bottom: 130px;
+    right: 20px;
+    cursor: pointer; /* 鼠标悬停时变为指针 */
+}
+
+#toTop:hover {
+    background-color: rgb(130, 173, 44); /* 鼠标悬停时背景变为浅灰色 */
+}

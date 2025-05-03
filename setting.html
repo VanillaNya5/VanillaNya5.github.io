@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>站内设置</title>
+    <script src="/script2.js"></script><!--引入脚本-->
+    <link rel="stylesheet" type="text/css" href="/styles.css"> <!-- 引入样式表 -->
+</head>
+<header>
+    <div class="navbar">
+        <a href="zhuzhan.html">主站</a>
+        <a href="chishizhilv\chishizhilv.html">赤石之旅</a>
+        <a href="loveserver.html">冈易：恋·生存服</a>
+    </div>
+</header>
+<body>
+<div class="inbody">
+
+    <h1>站内设置！</h1>
+    <p>你可以在这里修改网站的设置~帮助你更好的使用！</p>
+    <p>由于这是静态网站，所以依靠Cookie存储用户数据，删浏览器缓存会导致恢复默认设置哦</p>
+    <br>
+    <button id="nightModeButton">切换夜间模式</button><a>背景变灰，文字变白</a>
+    <br>
+    <button id="toTopDisable">回顶部按钮</button><a>控制回顶部按钮的显示(刷新生效)</a>
+
+    <script>
+        document.getElementById('nightModeButton').addEventListener('click', function() {
+            // 检查是否有 'nightmode' cookie
+            if (getCookie('nightmode')) {
+                // 如果存在，则删除 'nightmode' cookie 并恢复默认背景色
+                document.body.style.backgroundColor = ''; // 或者指定默认背景色
+                document.body.style.color = '';
+                document.cookie = "nightmode=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;";
+                this.textContent = "开启夜间模式"; // 更新按钮文本
+            } else {
+                // 如果不存在，则创建 'nightmode' cookie 并设置为灰色背景
+                document.body.style.backgroundColor = '#333';
+                document.body.style.color = '#fff';
+                document.cookie = "nightmode=enabled; expires=Fri, 31 Dec 9999 23:59:59 GMT; path=/;";
+                this.textContent = "关闭夜间模式"; // 更新按钮文本
+            }
+        });
+
+        document.getElementById('toTopDisable').addEventListener('click', function() {
+            // 检查是否有 'toTopDisable' cookie
+            if (getCookie('toTopDisable')) {
+                document.cookie = "toTopDisable=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;";
+                this.textContent = "关闭回顶部"; // 更新按钮文本
+            } else {
+                document.cookie = "toTopDisable=enabled; expires=Fri, 31 Dec 9999 23:59:59 GMT; path=/;";
+                this.textContent = "开启回顶部"; // 更新按钮文本
+            }
+        });
+        
+        //检查是否存在 'nightmode' cookie 并应用相应样式
+            if (getCookie('nightmode')) {
+                document.getElementById('nightModeButton').textContent = "关闭夜间模式";
+            } else {
+                document.getElementById('nightModeButton').textContent = "开启夜间模式";
+            }
+            if (getCookie('toTopDisable')) {
+                document.getElementById('toTopDisable').textContent = "关闭回顶部";
+            } else {
+                document.getElementById('toTopDisable').textContent = "开启回顶部";
+            }
+    </script>
+    <!--看什么源代码呢，很好看吗-->
+</div>
+<div id="muban2"></div>
+</body>
+<footer>
+    <div id="muban"></div>
+</footer>
+<script src="script.js"></script>
+<link rel="stylesheet" type="text/css" href="/styles2.css"> <!-- 引入样式表 -->
+</html>
