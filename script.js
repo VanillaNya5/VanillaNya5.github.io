@@ -4,6 +4,37 @@ function getCookie(name) {
     return match ? match[2] : null;
 }
 
+// 导航栏加载逻辑
+document.addEventListener("DOMContentLoaded", function () {
+    // 查找文档中带有 data-navbar-id 属性的所有 div
+    const navbarContainer = document.querySelector("div[data-navbar-id]");
+    if (navbarContainer) {
+        const navbarId = navbarContainer.getAttribute("data-navbar-id"); // 获取需要加载的导航栏 ID
+        fetch("/navbar.html") // 确保路径正确
+            .then(response => {
+                if (!response.ok) {
+                    throw new Error(`无法加载导航栏文件: ${response.statusText}`);
+                }
+                return response.text();
+            })
+            .then(data => {
+                // 创建一个临时的 DOM 容器来解析 HTML
+                const tempDiv = document.createElement("div");
+                tempDiv.innerHTML = data;
+
+                // 查找指定 ID 的导航栏
+                const navbar = tempDiv.querySelector(`div[data-navbar-id="${navbarId}"]`);
+                if (navbar) {
+                    // 替换整个 div
+                    navbarContainer.replaceWith(navbar);
+                } else {
+                    console.error(`未找到 data-navbar-id 为 "${navbarId}" 的导航栏`);
+                }
+            })
+            .catch(error => console.error("导航栏加载失败:", error));
+    }
+});
+
 // 页面加载时检查是否存在 'nightmode' cookie 并应用相应样式
 window.onload = function() {
     if (getCookie('nightmode')) {
@@ -139,3 +170,4 @@ var toTop = document.querySelector("#toTop");
         }, 16);
     }
 }
+
