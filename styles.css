@@ -1,5 +1,5 @@
 .inbody {
-    padding: 20px; /* 内边距，确保内容与边框有间距 */
+    padding: 30px; /* 内边距，确保内容与边框有间距 */
     margin: 20px auto; /* 居中对齐，顶部和底部留出间距 */
     border: 2px solid #ccc; /* 边框颜色和宽度 */
     border-radius: 15px; /* 圆角半径 */
