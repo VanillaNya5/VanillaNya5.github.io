@@ -99,7 +99,7 @@ images.forEach(function(img){
 const muban = document.getElementById('muban');//获取容器
 
 const a = document.createElement('p');//创建元素
-a.textContent = '本网站由"MC不灭"制作';
+a.textContent = '本网站由"VanillaNya5"制作';
 muban.appendChild(a);
 
 const b = document.createElement('p');//创建元素
