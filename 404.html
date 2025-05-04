@@ -8,22 +8,26 @@
     <link rel="stylesheet" type="text/css" href="/styles.css"> <!-- 引入样式表 -->
 </head>
 <header>
-    <div class="navbar" data-navbar-id="main">
-        <a href="index.html">主站</a>
-        <a href="chishizhilv\chishizhilv.html">赤石之旅</a>
-        <a href="loveserver.html">冈易：恋·生存服</a>
-    </div>
+    <div data-navbar-id="main"></div>
 </header>
 <body>
-<div class="inbody">
-
-    <h1>404</h1>
-    <p>你访问的页面不存在，请检查URL！</p>
-    <br>
-    <a href="setting.html">站内设置</a>
-
-    <br>
-    <button type="button" onclick="starfire()">点我预定star fire</button>
+<div class="inbody" style="display: flex;">
+    <div style="flex: 1;">
+        <h1>404</h1>
+        <p>你访问的页面不存在，请检查URL！</p>
+        <br>
+        <button onclick="history.back()">返回(如果有上一页的话)</button>
+        <br>
+        <a href="setting.html">站内设置</a>
+        <br>
+        <button type="button" onclick="starfire()">点我预定star fire</button>
+    </div>
+    <div style="flex: 1; text-align: right;">
+        <figure>
+            <img src="/data/momo_angry.gif" alt="生气的桃井" style="width: 300px; height: auto;">
+            <figcaption>生气的桃井</figcaption>
+        </figure>
+    </div>
     <script>
         function starfire() {
             if (window.confirm("是否预定性至火免费活动？")) {
