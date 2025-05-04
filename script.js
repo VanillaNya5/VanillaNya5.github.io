@@ -35,13 +35,20 @@ document.addEventListener("DOMContentLoaded", function () {
     }
 });
 
+//初始化inbody对象
+var inbody = document.getElementsByClassName("inbody")[0];
+
+
 // 页面加载时检查是否存在 'nightmode' cookie 并应用相应样式
-window.onload = function() {
-    if (getCookie('nightmode')) {
-        document.body.style.backgroundColor = '#333';
-        document.body.style.color = '#fff';
+document.addEventListener("DOMContentLoaded", function () {
+    const nightMode = getCookie('nightmode'); // 获取 'nightmode' cookie 的值
+    if (nightMode) {
+        document.body.style.backgroundColor = '#333'; // 设置背景颜色为深色
+        document.body.style.color = '#fff'; // 设置文字颜色为白色
+        inbody.style.backgroundColor = "#333";
     }
-};
+});
+
 
 
 // 选取所有的按钮并添加点击事件

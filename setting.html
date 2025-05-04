@@ -8,11 +8,7 @@
     <link rel="stylesheet" type="text/css" href="/styles.css"> <!-- 引入样式表 -->
 </head>
 <header>
-    <div class="navbar">
-        <a href="zhuzhan.html">主站</a>
-        <a href="chishizhilv\chishizhilv.html">赤石之旅</a>
-        <a href="loveserver.html">冈易：恋·生存服</a>
-    </div>
+    <div data-navbar-id="main"></div>
 </header>
 <body>
 <div class="inbody">
@@ -34,12 +30,14 @@
                 document.body.style.color = '';
                 document.cookie = "nightmode=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;";
                 this.textContent = "开启夜间模式"; // 更新按钮文本
+                inbody.style.backgroundColor = "";
             } else {
                 // 如果不存在，则创建 'nightmode' cookie 并设置为灰色背景
                 document.body.style.backgroundColor = '#333';
                 document.body.style.color = '#fff';
                 document.cookie = "nightmode=enabled; expires=Fri, 31 Dec 9999 23:59:59 GMT; path=/;";
                 this.textContent = "关闭夜间模式"; // 更新按钮文本
+                inbody.style.backgroundColor = "#333";
             }
         });
 
