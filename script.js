@@ -113,6 +113,26 @@ const b = document.createElement('p');//创建元素
 b.textContent = '©2024 保留所有权利.';
 muban.appendChild(b);
 
+// 获取页脚元素
+const body = document.querySelector('body');
+// 创建图片
+const bodyImage = document.createElement('img');
+bodyImage.src = '/data/momo.png';
+bodyImage.alt = '右下角图片';
+bodyImage.style.width = '50px'; // 设置图片宽度
+bodyImage.style.height = '65px'; // 设置图片高度
+bodyImage.style.cursor = 'pointer'; // 鼠标悬停时显示手型
+// 设置图片样式，使其在最下方并与右边保持 40px 距离
+bodyImage.style.position = 'absolute'; // 绝对定位
+bodyImage.style.bottom = '0'; // 距离底部 0
+bodyImage.style.right = '50px'; // 距离右侧 40px
+bodyImage.title = '点击桃井回到顶部！'; // 设置鼠标悬停时显示的文字
+// 确保父容器是相对定位
+body.style.position = 'relative';
+// 将图片添加到页脚
+body.appendChild(bodyImage);
+
+
 
 //防止重复访问
 // 获取当前页面的 URL
@@ -152,7 +172,7 @@ var toTop = document.querySelector("#toTop");
     window.addEventListener("scroll", scrollHandler);// 然后给window加事件监听，滚动条大于某个值时，div出现
     function scrollHandler(e) {        
         var distanceY = document.documentElement.scrollTop || document.body.scrollTop;//兼容写法，获取当前页面y轴的滚动距离
-        if (distanceY > 50) {
+        if (distanceY > 100) {
             toTop.style.display = "block";
         } else {
             toTop.style.display = "none";
@@ -174,3 +194,5 @@ var toTop = document.querySelector("#toTop");
     }
 }
 
+// 页脚图片绑定点击事件
+bodyImage.addEventListener('click', clickHandler);
