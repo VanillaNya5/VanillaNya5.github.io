@@ -183,7 +183,7 @@ footer {
     left: 0; /* 左边对齐 */
     right: 0; /* 右边对齐 */
     background-color: rgb(170, 170, 170); /* 灰色背景 */
-    color: rgb(0, 0, 0); /* 白色文字 */
+    color: rgb(0, 0, 0); /* 黑色文字 */
     text-align: center; /* 中间对齐 */
     padding: 15px; /* 上下内边距 */
     grid-row-start: 4;
