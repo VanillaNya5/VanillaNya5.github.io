@@ -107,28 +107,22 @@ b.textContent = '©2024 保留所有权利.';
 muban.appendChild(b);
 
 
-
-//防止用户重复访问
+//防止重复访问
 // 获取当前页面的 URL
-const currentUrl = window.location.href;
-
+const currentUrl = new URL(window.location.href).href;
 // 获取所有的链接
 const links = document.querySelectorAll('a');
-
 // 为每个链接添加点击事件
 links.forEach(link => {
-    link.addEventListener('click', function(event) {
-        // 获取链接的完整 URL
-        const linkUrl = link.href;
-
-        // 比较链接和当前页面的 URL
-        if (linkUrl === currentUrl) {
-            // 阻止默认行为（如果需要的话）
-            event.preventDefault();
-            // 弹窗提醒用户
-            alert('您已经在这里啦~');
-        }
-    });
+    if (link.origin === window.location.origin) { // 只处理同域链接
+        link.addEventListener('click', function(event) {
+            const linkUrl = new URL(link.href, window.location.origin).href; // 转换为绝对路径
+            if (linkUrl === currentUrl) {
+                event.preventDefault(); // 阻止默认行为
+                alert('您已经在这里啦~'); // 弹窗提醒用户
+            }
+        });
+    }
 });
 
 
