@@ -109,19 +109,21 @@ muban.appendChild(b);
 
 //防止重复访问
 // 获取当前页面的 URL
-const currentUrl = new URL(window.location.href).href;
-// 获取所有的链接
-const links = document.querySelectorAll('a');
-// 为每个链接添加点击事件
-links.forEach(link => {
-    if (link.origin === window.location.origin) { // 只处理同域链接
-        link.addEventListener('click', function(event) {
-            const linkUrl = new URL(link.href, window.location.origin).href; // 转换为绝对路径
-            if (linkUrl === currentUrl) {
-                event.preventDefault(); // 阻止默认行为
-                alert('您已经在这里啦~'); // 弹窗提醒用户
-            }
-        });
+function normalizeUrl(url) {
+    return url.endsWith('/') ? url.slice(0, -1) : url;
+}
+
+const currentUrl = normalizeUrl(window.location.href);
+
+// 使用事件委托，确保动态生成的链接也能正确处理
+document.addEventListener('click', function(event) {
+    const link = event.target.closest('a'); // 检查点击的是否是链接
+    if (link && link.origin === window.location.origin) { // 只处理同域链接
+        const linkUrl = normalizeUrl(new URL(link.href, window.location.origin).href);
+        if (linkUrl === currentUrl) {
+            event.preventDefault(); // 阻止默认行为
+            alert('您已经在这里啦~\n如果确实需要重新载入可以浏览器刷新~'); // 弹窗提醒用户
+        }
     }
 });
 
