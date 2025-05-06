@@ -27,16 +27,18 @@
             // 检查是否有 'nightmode' cookie
             if (getCookie('nightmode')) {
                 // 如果存在，则删除 'nightmode' cookie 并恢复默认背景色
+                nightMode = false; // 设置夜间模式为关闭
                 document.body.style.backgroundColor = ''; // 或者指定默认背景色
                 document.body.style.color = '';
-                document.cookie = "nightmode=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;";
+                document.cookie = "nightmode=; expires=Fri, 31 Dec 9999 23:59:59 GMT; path=/;";
                 this.textContent = "开启夜间模式"; // 更新按钮文本
                 inbody.style.backgroundColor = "";
             } else {
                 // 如果不存在，则创建 'nightmode' cookie 并设置为灰色背景
+                nightMode = true; // 设置夜间模式为开启
                 document.body.style.backgroundColor = '#333';
                 document.body.style.color = '#fff';
-                document.cookie = "nightmode=enabled; expires=Fri, 31 Dec 9999 23:59:59 GMT; path=/;";
+                document.cookie = "nightmode=true; expires=Fri, 31 Dec 9999 23:59:59 GMT; path=/;";
                 this.textContent = "关闭夜间模式"; // 更新按钮文本
                 inbody.style.backgroundColor = "#333";
             }

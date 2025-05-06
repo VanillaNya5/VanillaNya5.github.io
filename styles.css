@@ -189,3 +189,38 @@ footer {
     grid-row-start: 4;
     grid-row-end: 4;
 }
+
+.custom-menu {
+    display: none;
+    position: absolute;
+    background-color: white;
+    border: 1px solid black;
+    padding: 0;
+    margin: 0;
+    z-index: 1000;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); /* 添加阴影效果 */
+    border-radius: 5px; /* 添加圆角 */
+}
+
+.custom-menu ul {
+    list-style: none; /* 移除列表样式 */
+    margin: 0; /* 去掉默认的外边距 */
+    padding: 0; /* 去掉默认的内边距 */
+}
+
+.custom-menu li {
+    padding: 8px 12px; /* 设置内边距 */
+    cursor: pointer;
+    font-size: 14px; /* 调整字体大小 */
+    border-bottom: 1px solid #ddd; /* 为每个选项添加底部边框 */
+    background-color: white; /* 默认背景色 */
+}
+
+.custom-menu li:last-child {
+    border-bottom: none; /* 移除最后一个选项的底部边框 */
+}
+
+.custom-menu li:hover {
+    background-color: #dbdbdb; /* 鼠标悬停时的背景颜色 */
+    border-radius: 5px; /* 鼠标悬停时添加圆角效果 */
+}
