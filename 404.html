@@ -9,12 +9,12 @@
     <link rel="icon" type="image/jpg" href="/data/favicon.jpg">
 </head>
 <header>
-    <div data-navbar-id="main"></div>
+    <div data-navbar-id="main" class="navbar-placeholder"></div>
 </header>
 <body>
 <div class="inbody" style="display: flex;">
     <div style="flex: 1;">
-        <h1>404</h1>
+        <h1>404 Not found</h1>
         <p>你访问的页面不存在，请检查URL！</p>
         <br>
         <button onclick="history.back()">返回(如果有上一页的话)</button>
@@ -36,8 +36,8 @@
     </div>
     <script>
         function starfire() {
-            if (window.confirm("是否预定性至火免费活动？")) {
-                alert('好的，star fire将会于明晚UTC 2:00绑好送到您家门口');
+            if (window.confirm("是否预定星之火免费活动？")) {
+                alert('好的，star fire将会于明晚UTC 2:00送到您家门口');
             } else {
                 alert('好的，star fire近期处于空闲状态，您可以随时预定');
             }

@@ -30,6 +30,18 @@ body {
     grid-template-rows: 50px auto;
 }
 
+.navbar-placeholder {
+    margin: 0;
+    background-color: #333; /* 背景颜色，与导航栏一致 */
+    overflow: hidden; /* 清除浮动 */
+    height: 54px; /* 设置高度，与导航栏一致 */
+    display: flex; /* 使用 flex 布局 */
+    align-items: center; /* 垂直居中 */
+    justify-content: center; /* 水平居中 */
+    color: #f2f2f2; /* 文字颜色，与导航栏一致 */
+    font-size: 16px; /* 设置字体大小 */
+}
+
 .navbar {
     margin: 0;
     background-color: #333; /* 背景颜色 */
