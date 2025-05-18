@@ -9,6 +9,25 @@
     line-height: 1.3; /* 行高 */
 }
 
+/* 移动端适配 (屏幕宽度 ≤ 768px) */
+@media (max-width: 768px) {
+    .inbody {
+      width: 90%;
+      padding: 20px;
+      margin: 15px auto; /* 适当缩小外边距 */
+      border-radius: 12px; /* 微调圆角适应小屏幕 */
+    }
+  }
+  
+/* 小屏手机优化 (屏幕宽度 ≤ 480px) */
+@media (max-width: 480px) {
+    .inbody {
+        padding: 5px;
+        font-size: 0.9em; /* 适当缩小字号 */
+    }
+}
+
+
 p {
     margin: 5px;
     line-height: 1; /* 设置段落行高 */
@@ -97,6 +116,84 @@ body {
     display: block; /* 显示二级导航 */
 }
 
+
+
+.vertical-profile-table {
+    width: 100%;
+    max-width: 600px;
+    font-family: 'Arial', sans-serif;
+    border-collapse: separate;
+    border-spacing: 0;
+    color: #333;
+    border-radius: 12px;
+    overflow: hidden;
+    box-shadow: 0 0 0 1px rgba(0, 0, 0, 0.1);
+    background: white;
+}
+
+/* 表头样式 */
+.vertical-profile-table th {
+    background-color: #f8f9fa;
+    padding: 14px 20px;
+    text-align: left;
+    font-weight: 600;
+    border: 1px solid rgba(0, 0, 0, 0.1);
+    border-width: 0 1px 1px 0;
+}
+
+/* 单元格样式 */
+.vertical-profile-table td {
+    padding: 12px 20px;
+    border: 1px solid rgba(0, 0, 0, 0.1);
+    border-width: 0 1px 1px 0;
+    vertical-align: top;
+}
+
+/* 圆角处理 */
+.vertical-profile-table tr:first-child th {
+    border-top-left-radius: 12px;
+}
+.vertical-profile-table tr:first-child td {
+    border-top-right-radius: 12px;
+}
+.vertical-profile-table tr:last-child td:first-child {
+    border-bottom-left-radius: 12px;
+}
+.vertical-profile-table tr:last-child td:last-child {
+    border-bottom-right-radius: 12px;
+}
+
+/* 边框优化 */
+.vertical-profile-table td:last-child,
+.vertical-profile-table th:last-child {
+    border-right: 0;
+}
+
+/* 隔行背景色 */
+.vertical-profile-table tbody tr:nth-child(even) {
+    background-color: #e2e4e6;
+}
+
+/* 悬停效果 */
+.vertical-profile-table tr:hover {
+    background-color: #c6c8ca;
+    transition: background-color 0.2s;
+}
+
+/* 响应式设计 */
+@media (max-width: 480px) {
+    .vertical-profile-table {
+        border-radius: 8px;
+        margin: 10px;
+        font-size: 14px;
+    }
+    .vertical-profile-table th,
+    .vertical-profile-table td {
+        padding: 12px 15px;
+    }
+}
+
+  
 
 
 /* 隐藏文本 */
