@@ -75,53 +75,56 @@
 <div class="inbody">
 </div>
 <script>
+<script>
 function createDialog(options) {
-            return new Promise((resolve) => {
-                // 创建遮罩层
-                const mask = document.createElement('div');
-                mask.className = 'dialog-mask';
+    return new Promise((resolve) => {
+        // 声明计时器存储数组
+        let timerIds = [];
 
-                // 创建对话框主体
-                const dialog = document.createElement('div');
-                dialog.className = 'dialog-box';
+        // 创建遮罩层
+        const mask = document.createElement('div');
+        mask.className = 'dialog-mask';
 
-                // 添加标题
-                if (options.title) {
-                    const title = document.createElement('h3');
-                    title.className = 'dialog-title';
-                    title.textContent = options.title;
-                    dialog.appendChild(title);
-                }
+        // 创建对话框主体
+        const dialog = document.createElement('div');
+        dialog.className = 'dialog-box';
 
-                // 添加内容
-                if (options.content) {
-                    const content = document.createElement('div');
-                    content.className = 'dialog-content';
-                    content.textContent = options.content;
-                    dialog.appendChild(content);
-                }
+        // 添加标题
+        if (options.title) {
+            const title = document.createElement('h3');
+            title.className = 'dialog-title';
+            title.textContent = options.title;
+            dialog.appendChild(title);
+        }
 
-                // 创建按钮容器
-                const buttonContainer = document.createElement('div');
-                buttonContainer.className = 'dialog-buttons';
+        // 添加内容
+        if (options.content) {
+            const content = document.createElement('div');
+            content.className = 'dialog-content';
+            content.textContent = options.content;
+            dialog.appendChild(content);
+        }
 
-                // 创建按钮
-                options.buttons.forEach(btn => {
-                    const button = document.createElement('button');
-                    button.className = `dialog-button ${btn.type || ''}`;
-                    button.textContent = btn.text;
-                    button.style.backgroundColor = btn.color || '#eee';
+        // 创建按钮容器
+        const buttonContainer = document.createElement('div');
+        buttonContainer.className = 'dialog-buttons';
 
-            // 修复的倒计时逻辑
+        // 创建按钮
+        options.buttons.forEach(btn => {
+            const button = document.createElement('button');
+            button.className = `dialog-button ${btn.type || ''}`;
+            button.textContent = btn.text;
+            button.style.backgroundColor = btn.color || '#eee';
+
+            // 修正后的倒计时逻辑
             if (btn.delay) {
                 button.disabled = true;
-                let countdown = btn.delay;
                 
                 const update = () => {
-                    // 先显示当前秒数
+                    // 1. 先显示当前秒数
                     button.textContent = `${btn.text} (${countdown}s)`;
                     
-                    // 再检查是否结束
+                    // 2. 检查是否结束
                     if (countdown <= 0) {
                         clearInterval(timer);
                         button.disabled = false;
@@ -129,7 +132,7 @@ function createDialog(options) {
                         return;
                     }
                     
-                    // 最后减少计数
+                    // 3. 最后减少计数
                     countdown--;
                 };
 
@@ -138,29 +141,32 @@ function createDialog(options) {
                 update(); // 立即初始化显示
             }
 
-                    
-                    
-                    button.onclick = () => {
-                        mask.remove();
-                        resolve(btn.value);
-                    };
+            // 按钮点击处理
+            button.onclick = () => {
+                // 清除所有计时器
+                timerIds.forEach(clearInterval);
+                mask.remove();
+                resolve(btn.value);
+            };
 
-                    buttonContainer.appendChild(button);
-                });
+            buttonContainer.appendChild(button);
+        });
 
-                // 点击背景关闭处理
-                mask.onclick = (e) => {
-                    if (e.target === mask) {
-                        mask.remove();
-                        resolve('background');
-                    }
-                };
-
-                dialog.appendChild(buttonContainer);
-                mask.appendChild(dialog);
-                document.body.appendChild(mask);
-            });
+        // 点击背景关闭处理
+        mask.onclick = (e) => {
+            if (e.target === mask) {
+                // 清除所有计时器
+                timerIds.forEach(clearInterval);
+                mask.remove();
+                resolve('background');
+            }
         };
+
+        dialog.appendChild(buttonContainer);
+        mask.appendChild(dialog);
+        document.body.appendChild(mask);
+    });
+}
     
     createDialog({
         title: "年龄验证",
@@ -184,7 +190,7 @@ function createDialog(options) {
             title: "使用协议",
             content: "您理解并同意：所有生成内容均由用户自行负责，开发者不承担任何责任",
             buttons: [
-                { text: "同意协议", value: "yes",delay:"5" },
+                { text: "同意协议", value: "yes",delay:5 },
                 { text: "拒绝", value: "no" }
             ]
         }).then(agreement => {
