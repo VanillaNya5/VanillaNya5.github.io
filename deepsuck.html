@@ -75,105 +75,102 @@
 <div class="inbody">
 </div>
 <script>
-        // 初始化验证流程
-        async function init() {
-            try {
-                // 年龄验证
-                const ageConfirm = await createDialog({
-                    title: "成年人验证",
-                    content: "根据相关法规，请确认您已年满18周岁",
-                    buttons: [
-                        { text: "已满18岁", value: "yes" },
-                        { text: "未满18岁", value: "no" }
-                    ]
-                });
+function init() {
+    // 年龄验证
+    createDialog({
+        title: "成年人验证",
+        content: "根据相关法规，请确认您已年满18周岁",
+        buttons: [
+            { text: "已满18岁", value: "yes" },
+            { text: "未满18岁", value: "no" }
+        ]
+    }).then(ageConfirm => {
+        if (ageConfirm !== 'yes') {
+            document.body.innerHTML = `
+                <div class="validation-message">
+                    <h2>访问受限</h2>
+                    <p>根据您的选择，我们无法提供相关服务</p>
+                </div>`;
+            return;
+        }
 
-                // 移除跳转判断
-                if (ageConfirm !== 'yes') {
-                    document.body.innerHTML = `
-                        <div class="validation-message">
-                            <h2>访问受限</h2>
-                            <p>根据您的选择，我们无法提供相关服务</p>
-                        </div>
-                    `;
-                    return;
-                }
-
-                // 用户协议
-                const agreement = await createDialog({
-                    title: "使用协议",
-                    content: "您理解并同意：所有生成内容均由用户自行负责，开发者不承担任何责任",
-                    buttons: [
-                        { text: "同意协议", value: "yes" },
-                        { text: "拒绝", value: "no" }
-                    ]
-                });
-
-                if (agreement !== 'yes') {
-                    document.body.innerHTML = `
-                        <div class="validation-message">
-                            <h2>服务不可用</h2>
-                            <p>您需要同意使用协议才能继续</p>
-                        </div>
-                    `;
-                    return;
-                }
-
-                // 加载主内容
-                renderContent();
-
-            } catch (error) {
-                console.error('初始化错误:', error);
+        // 用户协议
+        createDialog({
+            title: "使用协议",
+            content: "您理解并同意：所有生成内容均由用户自行负责，开发者不承担任何责任",
+            buttons: [
+                { text: "同意协议", value: "yes" },
+                { text: "拒绝", value: "no" }
+            ]
+        }).then(agreement => {
+            if (agreement !== 'yes') {
                 document.body.innerHTML = `
                     <div class="validation-message">
-                        <h2>系统错误</h2>
-                        <p>请刷新页面重试</p>
-                    </div>
-                `;
+                        <h2>服务不可用</h2>
+                        <p>您需要同意使用协议才能继续</p>
+                    </div>`;
+                return;
             }
-        }
-        function renderContent() {
-            document.querySelector('.inbody').innerHTML = `
-                <div class="hero">
-                    <h1>DeepSuck</h1>
-                    <p>革命性多模态生成引擎 · 突破性内容创作体验</p>
-                    <a href="#" class="download-btn">Click here to download</a>
-                </div>
-                
-                <div class="features">
-                    <div class="feature-item">
-                        <h3>❤️ 完美的色情训练集</h3>
-                        <p>DeepSuck的训练集使它能完美生成任何色情内容，接近现实和人类创作者</p>
-                    </div>
-                    <div class="feature-item">
-                        <h3>🚀 多类型输出</h3>
-                        <p>支持输出文本、图片、视频、音频，内置TTS功能，帮助您将灵感转化为创造</p>
-                    </div>
-                    <div class="feature-item">
-                        <h3>🔐 本地化隐私保护</h3>
-                        <p>安全的的数据处理保障用户隐私安全，全程DNS加密，不再畏惧黑客入侵</p>
-                    </div>
-                </div>
-            `;
+            
+            // 加载主内容
+            renderContent();
+        }).catch(handleError);
+    }).catch(handleError);
+}
 
-            // 绑定下载事件
-            document.querySelector('.download-btn').addEventListener('click', async (e) => {
-                e.preventDefault();
-                const confirm = await showConfirmationDialog({
-                    title: "最终确认",
-                    content: "即将开始DeepSuck（约214MB）",
-                    buttons: [
-                        { text: "确认下载", value: "yes" },
-                        { text: "取消", value: "no" }
-                    ]
-                });
-                if (confirm === 'yes') {window.open("https://genshin.hoyoverse.com/", '_blank', 'noopener,noreferrer');}
-            });
-        }
+function renderContent() {
+    document.querySelector('.inbody').innerHTML = `
+        <div class="hero">
+            <h1>DeepSuck</h1>
+            <p>革命性多模态生成引擎 · 突破性内容创作体验</p>
+            <a href="#" class="download-btn">Click here to download</a>
+        </div>
+        
+        <div class="features">
+            <div class="feature-item">
+                <h3>❤️ 完美的色情训练集</h3>
+                <p>DeepSuck的训练集使它能完美生成任何色情内容，接近现实和人类创作者</p>
+            </div>
+            <div class="feature-item">
+                <h3>🚀 多类型输出</h3>
+                <p>支持输出文本、图片、视频、音频，内置TTS功能，帮助您将灵感转化为创造</p>
+            </div>
+            <div class="feature-item">
+                <h3>🔐 本地化隐私保护</h3>
+                <p>安全的的数据处理保障用户隐私安全，全程DNS加密，不再畏惧黑客入侵</p>
+            </div>
+        </div>`;
 
-        // 启动初始化
-        init();
-    </script>
+    // 绑定下载事件（同步版）
+    document.querySelector('.download-btn').addEventListener('click', function(e) {
+        e.preventDefault();
+        createDialog({
+            title: "最终确认",
+            content: "即将开始DeepSuck（约214MB）",
+            buttons: [
+                { text: "确认下载", value: "yes" },
+                { text: "取消", value: "no" }
+            ]
+        }).then(confirm => {
+            if (confirm === 'yes') {
+                window.open("https://genshin.hoyoverse.com/", '_blank', 'noopener,noreferrer');
+            }
+        }).catch(handleError);
+    });
+}
+
+function handleError(error) {
+    console.error('系统错误:', error);
+    document.body.innerHTML = `
+        <div class="validation-message">
+            <h2>系统错误</h2>
+            <p>请刷新页面重试</p>
+        </div>`;
+}
+
+// 启动初始化
+init();
+</script>
 <div id="muban2"></div>
 </body>
 <footer>
