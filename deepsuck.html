@@ -1,0 +1,163 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>主站</title>
+    <script src="/script2.js"></script><!--引入脚本-->
+    <link rel="stylesheet" type="text/css" href="/styles.css"> <!-- 引入样式表 -->
+    <link rel="icon" type="image/jpg" href="/data/favicon.jpg">
+    <style>
+        body {
+        background-image: url('/data/gamedevelopment.jpg');
+        background-size: cover; /* 背景图片自动调整大小以覆盖整个页面 */
+        background-repeat: no-repeat; /* 防止背景图片重复 */
+        background-position: center; /* 背景图片居中显示 */
+        }
+
+ .hero {
+            text-align: center;
+            padding: 40px 20px;
+            background: rgba(255,255,255,0.1);
+            border-radius: 20px;
+            backdrop-filter: blur(10px);
+            margin-bottom: 30px;
+        }
+
+        .download-btn {
+            display: inline-block;
+            padding: 18px 50px;
+            background: var(--accent-pink);
+            color: white;
+            border-radius: 30px;
+            font-size: 1.5em;
+            text-decoration: none;
+            margin: 20px 0;
+            box-shadow: 0 4px 15px rgba(255,107,107,0.4);
+            transition: transform 0.3s, box-shadow 0.3s;
+            animation: pulse 2s infinite;
+        }
+
+        .features {
+            display: grid;
+            gap: 15px;
+            margin: 30px 0;
+        }
+
+        .feature-item {
+            padding: 15px;
+            background: rgba(255,255,255,0.05);
+            border-radius: 10px;
+            border: 1px solid rgba(255,255,255,0.1);
+        }
+
+        @media (max-width: 600px) {
+            .inbody {
+                padding: 10px;
+            }
+            .download-btn {
+                font-size: 1.2em;
+                padding: 15px 40px;
+            }
+        }
+
+        @keyframes pulse {
+            0% { transform: scale(1); }
+            50% { transform: scale(1.05); }
+            100% { transform: scale(1); }
+        }
+    </style>
+</head>
+<header>
+    <div data-navbar-id="main" class="navbar-placeholder"></div>
+</header>
+<body>
+<div class="inbody">
+</div>
+<script>
+        // 初始化验证流程
+        async function init() {
+            try {
+                // 年龄验证
+                const ageConfirm = await showConfirmationDialog({
+                    title: "成年人验证",
+                    content: "根据相关法规，请确认您已年满18周岁",
+                    buttons: [
+                        { text: "已满18岁", value: "yes" },
+                        { text: "未满18岁", value: "no" }
+                    ]
+                });
+                if (ageConfirm !== 'yes') return redirect();
+
+                // 用户协议
+                const agreement = await showConfirmationDialog({
+                    title: "使用协议",
+                    content: "您理解并同意：所有生成内容均由用户自行负责，开发者不承担任何责任",
+                    buttons: [
+                        { text: "同意协议", value: "yes" },
+                        { text: "拒绝", value: "no" }
+                    ]
+                });
+                if (agreement !== 'yes') return redirect();
+
+                // 加载主界面
+                renderContent();
+            } catch (error) {
+                redirect();
+            }
+        }
+
+        function redirect() {
+            window.location.href = 'https://genshin.hoyoverse.com';
+        }
+
+        function renderContent() {
+            document.querySelector('.inbody').innerHTML = `
+                <div class="hero">
+                    <h1>DeepSuck</h1>
+                    <p>革命性多模态生成引擎 · 突破性内容创作体验</p>
+                    <a href="#" class="download-btn">Click here to download</a>
+                </div>
+                
+                <div class="features">
+                    <div class="feature-item">
+                        <h3>❤️ 完美的色情训练集</h3>
+                        <p>DeepSuck的训练集使它能完美生成任何色情内容，接近现实和人类创作者</p>
+                    </div>
+                    <div class="feature-item">
+                        <h3>🚀 多类型输出</h3>
+                        <p>支持输出文本、图片、视频、音频，内置TTS功能，帮助您将灵感转化为创造</p>
+                    </div>
+                    <div class="feature-item">
+                        <h3>🔐 本地化隐私保护</h3>
+                        <p>安全的的数据处理保障用户隐私安全，全程DNS加密，不再畏惧黑客入侵</p>
+                    </div>
+                </div>
+            `;
+
+            // 绑定下载事件
+            document.querySelector('.download-btn').addEventListener('click', async (e) => {
+                e.preventDefault();
+                const confirm = await showConfirmationDialog({
+                    title: "最终确认",
+                    content: "即将开始下载智能套件（约9.2GB）",
+                    buttons: [
+                        { text: "确认下载", value: "yes" },
+                        { text: "取消", value: "no" }
+                    ]
+                });
+                if (confirm === 'yes') redirect();
+            });
+        }
+
+        // 启动初始化
+        init();
+    </script>
+<div id="muban2"></div>
+</body>
+<footer>
+    <div id="muban"></div>
+</footer>
+<script src="script.js"></script>
+<link rel="stylesheet" type="text/css" href="/styles2.css"> <!-- 引入样式表 -->
+</html>
