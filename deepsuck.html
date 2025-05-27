@@ -117,6 +117,7 @@ function createDialog(options) {
 
             // 修正后的倒计时逻辑
             if (btn.delay) {
+                console.log("true")
                 button.disabled = true;
                 const originalText = btn.text;
                 let countdown = Number(btn.delay);
@@ -138,7 +139,7 @@ function createDialog(options) {
                     countdown--;
                 };
 
-                const timer = setInterval(() => update(), 1000);
+                const timer = setInterval(update, 1000);
                 timerIds.push(timer);
                 update(); // 立即初始化显示
             }
