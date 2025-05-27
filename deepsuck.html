@@ -136,7 +136,7 @@ function createDialog(options) {
                     countdown--;
                 };
 
-                const timer = setInterval(update, 1000);
+                const timer = setInterval(() => update(), 1000);
                 timerIds.push(timer);
                 update(); // 立即初始化显示
             }
