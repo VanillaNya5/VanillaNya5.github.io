@@ -75,102 +75,103 @@
 <div class="inbody">
 </div>
 <script>
-function createDialog(options) {
-    return new Promise((resolve) => {
-        // 声明计时器存储数组
-        let timerIds = [];
+const dialogStack = [];
+        const BASE_Z_INDEX = 1000;
 
-        // 创建遮罩层
-        const mask = document.createElement('div');
-        mask.className = 'dialog-mask';
-
-        // 创建对话框主体
-        const dialog = document.createElement('div');
-        dialog.className = 'dialog-box';
-
-        // 添加标题
-        if (options.title) {
-            const title = document.createElement('h3');
-            title.className = 'dialog-title';
-            title.textContent = options.title;
-            dialog.appendChild(title);
-        }
-
-        // 添加内容
-        if (options.content) {
-            const content = document.createElement('div');
-            content.className = 'dialog-content';
-            content.textContent = options.content;
-            dialog.appendChild(content);
-        }
-
-        // 创建按钮容器
-        const buttonContainer = document.createElement('div');
-        buttonContainer.className = 'dialog-buttons';
-
-        // 创建按钮
-        options.buttons.forEach(btn => {
-            const button = document.createElement('button');
-            button.className = `dialog-button ${btn.type || ''}`;
-            button.textContent = btn.text;
-            button.style.backgroundColor = btn.color || '#eee';
-
-            console.log(btn)
-            // 修正后的倒计时逻辑
-            if (btn.delay) {
-                console.log("true")
-                button.disabled = true;
-                const originalText = btn.text;
-                let countdown = Number(btn.delay);
+        function createDialog(options) {
+            return new Promise((resolve) => {
+                // 计算层级
+                const zIndex = BASE_Z_INDEX + dialogStack.length * 2;
                 
-                const update = () => {
-                    // 1. 先显示当前秒数
-                    button.textContent = `${originalText} (${countdown}s)`;
-                    console.log(countdown);
-                    
-                    // 2. 检查是否结束
-                    if (countdown <= 0) {
-                        clearInterval(timer);
-                        button.disabled = false;
-                        button.textContent = btn.text;
-                        return;
+                // 创建遮罩层
+                const mask = document.createElement('div');
+                mask.className = 'dialog-mask';
+                mask.style.zIndex = zIndex;
+
+                // 创建对话框主体
+                const dialog = document.createElement('div');
+                dialog.className = 'dialog-box';
+                dialog.style.zIndex = zIndex + 1;
+
+                // 标题
+                if (options.title) {
+                    const title = document.createElement('h3');
+                    title.style.marginTop = '0';
+                    title.textContent = options.title;
+                    dialog.appendChild(title);
+                }
+
+                // 内容
+                if (options.content) {
+                    const content = document.createElement('p');
+                    content.textContent = options.content;
+                    dialog.appendChild(content);
+                }
+
+                const buttonContainer = document.createElement('div');
+                buttonContainer.className = 'dialog-buttons';
+
+                let timers = [];
+
+                options.buttons.forEach(btn => {
+                    const button = document.createElement('button');
+                    button.className = 'dialog-button';
+                    button.textContent = btn.text;
+                    button.style.backgroundColor = btn.color || '#f0f0f0';
+
+                    // 倒计时逻辑
+                    if (typeof btn.delay === 'number' && btn.delay > 0) {
+                        button.disabled = true;
+                        const originalText = btn.text;
+                        let countdown = btn.delay;
+
+                        const update = () => {
+                            button.textContent = `${originalText} (${countdown}s)`;
+                            if (countdown <= 0) {
+                                clearInterval(timer);
+                                button.disabled = false;
+                                button.textContent = originalText;
+                                return;
+                            }
+                            countdown--;
+                        };
+
+                        const timer = setInterval(update, 1000);
+                        timers.push(timer);
+                        update();
                     }
-                    
-                    // 3. 最后减少计数
-                    countdown--;
+
+                    // 按钮点击事件
+                    button.onclick = () => {
+                        cleanup();
+                        resolve(btn.value);
+                    };
+
+                    buttonContainer.appendChild(button);
+                });
+
+                dialog.appendChild(buttonContainer);
+                mask.appendChild(dialog);
+                document.body.appendChild(mask);
+                dialogStack.push({ mask, timers });
+
+                // 背景点击事件
+                mask.onclick = (e) => {
+                    if (e.target === mask && options.backgroundClose !== false) {
+                        cleanup();
+                        resolve(options.backgroundValue || 'background');
+                    }
                 };
 
-                const timer = setInterval(update, 1000);
-                timerIds.push(timer);
-                update(); // 立即初始化显示
-            }
-
-            // 按钮点击处理
-            button.onclick = () => {
-                // 清除所有计时器
-                timerIds.forEach(clearInterval);
-                mask.remove();
-                resolve(btn.value);
-            };
-
-            buttonContainer.appendChild(button);
-        });
-
-        // 点击背景关闭处理
-        mask.onclick = (e) => {
-            if (e.target === mask) {
-                // 清除所有计时器
-                timerIds.forEach(clearInterval);
-                mask.remove();
-                resolve('background');
-            }
-        };
-
-        dialog.appendChild(buttonContainer);
-        mask.appendChild(dialog);
-        document.body.appendChild(mask);
-    });
-}
+                // 清理函数
+                const cleanup = () => {
+                    timers.forEach(clearInterval);
+                    mask.remove();
+                    const index = dialogStack.findIndex(d => d.mask === mask);
+                    if (index > -1) dialogStack.splice(index, 1);
+                };
+            });
+        }
     
     createDialog({
         title: "年龄验证",
