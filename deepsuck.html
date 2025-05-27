@@ -118,11 +118,12 @@ function createDialog(options) {
             // 修正后的倒计时逻辑
             if (btn.delay) {
                 button.disabled = true;
+                const originalText = btn.text;
                 let countdown = Number(btn.delay);
                 
                 const update = () => {
                     // 1. 先显示当前秒数
-                    button.textContent = `${btn.text} (${countdown}s)`;
+                    button.textContent = `${originalText} (${countdown}s)`;
                     
                     // 2. 检查是否结束
                     if (countdown <= 0) {
