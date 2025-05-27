@@ -79,7 +79,7 @@
         async function init() {
             try {
                 // 年龄验证
-                const ageConfirm = await showConfirmationDialog({
+                const ageConfirm = await createDialog({
                     title: "成年人验证",
                     content: "根据相关法规，请确认您已年满18周岁",
                     buttons: [
@@ -87,10 +87,20 @@
                         { text: "未满18岁", value: "no" }
                     ]
                 });
-                if (ageConfirm !== 'yes') return redirect();
+
+                // 移除跳转判断
+                if (ageConfirm !== 'yes') {
+                    document.body.innerHTML = `
+                        <div class="validation-message">
+                            <h2>访问受限</h2>
+                            <p>根据您的选择，我们无法提供相关服务</p>
+                        </div>
+                    `;
+                    return;
+                }
 
                 // 用户协议
-                const agreement = await showConfirmationDialog({
+                const agreement = await createDialog({
                     title: "使用协议",
                     content: "您理解并同意：所有生成内容均由用户自行负责，开发者不承担任何责任",
                     buttons: [
@@ -98,19 +108,30 @@
                         { text: "拒绝", value: "no" }
                     ]
                 });
-                if (agreement !== 'yes') return redirect();
 
-                // 加载主界面
+                if (agreement !== 'yes') {
+                    document.body.innerHTML = `
+                        <div class="validation-message">
+                            <h2>服务不可用</h2>
+                            <p>您需要同意使用协议才能继续</p>
+                        </div>
+                    `;
+                    return;
+                }
+
+                // 加载主内容
                 renderContent();
+
             } catch (error) {
-                redirect();
+                console.error('初始化错误:', error);
+                document.body.innerHTML = `
+                    <div class="validation-message">
+                        <h2>系统错误</h2>
+                        <p>请刷新页面重试</p>
+                    </div>
+                `;
             }
         }
-
-        function redirect() {
-            window.location.href = 'https://genshin.hoyoverse.com';
-        }
-
         function renderContent() {
             document.querySelector('.inbody').innerHTML = `
                 <div class="hero">
@@ -140,7 +161,7 @@
                 e.preventDefault();
                 const confirm = await showConfirmationDialog({
                     title: "最终确认",
-                    content: "即将开始下载智能套件（约9.2GB）",
+                    content: "即将开始DeepSuck（约214MB）",
                     buttons: [
                         { text: "确认下载", value: "yes" },
                         { text: "取消", value: "no" }
