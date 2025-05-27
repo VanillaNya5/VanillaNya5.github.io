@@ -124,6 +124,7 @@ function createDialog(options) {
                 const update = () => {
                     // 1. 先显示当前秒数
                     button.textContent = `${originalText} (${countdown}s)`;
+                    console.log(countdown);
                     
                     // 2. 检查是否结束
                     if (countdown <= 0) {
