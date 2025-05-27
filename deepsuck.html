@@ -142,7 +142,7 @@ function createDialog(options) {
         ]
     }).then(ageConfirm => {
         if (ageConfirm !== 'yes') {
-            document.body.innerHTML = `
+            document.querySelector('.inbody').innerHTML = `
                 <div class="validation-message">
                     <h2>访问受限</h2>
                     <p>根据您的选择，我们无法提供相关服务</p>
@@ -160,7 +160,7 @@ function createDialog(options) {
             ]
         }).then(agreement => {
             if (agreement !== 'yes') {
-                document.body.innerHTML = `
+                document.querySelector('.inbody').innerHTML = `
                     <div class="validation-message">
                         <h2>服务不可用</h2>
                         <p>您需要同意使用协议才能继续</p>
