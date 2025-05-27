@@ -118,6 +118,7 @@ function createDialog(options) {
             // 修正后的倒计时逻辑
             if (btn.delay) {
                 button.disabled = true;
+                let countdown = Number(btn.delay);
                 
                 const update = () => {
                     // 1. 先显示当前秒数
