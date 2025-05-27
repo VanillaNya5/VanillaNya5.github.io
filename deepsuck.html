@@ -110,6 +110,35 @@ function createDialog(options) {
                     const button = document.createElement('button');
                     button.className = `dialog-button ${btn.type || ''}`;
                     button.textContent = btn.text;
+                    button.style.backgroundColor = btn.color || '#eee';
+
+            // 修复的倒计时逻辑
+            if (btn.delay) {
+                button.disabled = true;
+                let countdown = btn.delay;
+                
+                const update = () => {
+                    // 先显示当前秒数
+                    button.textContent = `${btn.text} (${countdown}s)`;
+                    
+                    // 再检查是否结束
+                    if (countdown <= 0) {
+                        clearInterval(timer);
+                        button.disabled = false;
+                        button.textContent = btn.text;
+                        return;
+                    }
+                    
+                    // 最后减少计数
+                    countdown--;
+                };
+
+                const timer = setInterval(update, 1000);
+                timerIds.push(timer);
+                update(); // 立即初始化显示
+            }
+
+                    
                     
                     button.onclick = () => {
                         mask.remove();
@@ -155,7 +184,7 @@ function createDialog(options) {
             title: "使用协议",
             content: "您理解并同意：所有生成内容均由用户自行负责，开发者不承担任何责任",
             buttons: [
-                { text: "同意协议", value: "yes" },
+                { text: "同意协议", value: "yes",delay:"5" },
                 { text: "拒绝", value: "no" }
             ]
         }).then(agreement => {
