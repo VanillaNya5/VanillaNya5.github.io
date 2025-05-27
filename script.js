@@ -130,7 +130,7 @@ document.querySelectorAll('.toggle-button').forEach(button => {
                 mask.appendChild(dialog);
                 document.body.appendChild(mask);
             });
-        }
+        };
 
 
 
