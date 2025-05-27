@@ -177,8 +177,8 @@ const dialogStack = [];
         title: "年龄验证",
         content: "根据相关法规，请确认您已年满18周岁",
         buttons: [
-            { text: "已满18岁", value: "yes" },
-            { text: "未满18岁", value: "no" }
+            { text: "已满18岁", value: "yes",color: "#4CAF50" },
+            { text: "未满18岁", value: "no",color: "#f44336" }
         ]
     }).then(ageConfirm => {
         if (ageConfirm !== 'yes') {
@@ -195,8 +195,8 @@ const dialogStack = [];
             title: "使用协议",
             content: "您理解并同意：所有生成内容均由用户自行负责，开发者不承担任何责任",
             buttons: [
-                { text: "同意协议", value: "yes",delay:5 },
-                { text: "拒绝", value: "no" }
+                { text: "同意协议", value: "yes",color: "#2196F3",delay:5 },
+                { text: "拒绝", value: "no",color: "#9E9E9E" }
             ]
         }).then(agreement => {
             if (agreement !== 'yes') {
