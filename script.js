@@ -73,67 +73,6 @@ document.querySelectorAll('.toggle-button').forEach(button => {
 
 
 
-// 对话框创建函数
-        function createDialog(options) {
-            return new Promise((resolve) => {
-                // 创建遮罩层
-                const mask = document.createElement('div');
-                mask.className = 'dialog-mask';
-
-                // 创建对话框主体
-                const dialog = document.createElement('div');
-                dialog.className = 'dialog-box';
-
-                // 添加标题
-                if (options.title) {
-                    const title = document.createElement('h3');
-                    title.className = 'dialog-title';
-                    title.textContent = options.title;
-                    dialog.appendChild(title);
-                }
-
-                // 添加内容
-                if (options.content) {
-                    const content = document.createElement('div');
-                    content.className = 'dialog-content';
-                    content.textContent = options.content;
-                    dialog.appendChild(content);
-                }
-
-                // 创建按钮容器
-                const buttonContainer = document.createElement('div');
-                buttonContainer.className = 'dialog-buttons';
-
-                // 创建按钮
-                options.buttons.forEach(btn => {
-                    const button = document.createElement('button');
-                    button.className = `dialog-button ${btn.type || ''}`;
-                    button.textContent = btn.text;
-                    
-                    button.onclick = () => {
-                        mask.remove();
-                        resolve(btn.value);
-                    };
-
-                    buttonContainer.appendChild(button);
-                });
-
-                // 点击背景关闭处理
-                mask.onclick = (e) => {
-                    if (e.target === mask) {
-                        mask.remove();
-                        resolve('background');
-                    }
-                };
-
-                dialog.appendChild(buttonContainer);
-                mask.appendChild(dialog);
-                document.body.appendChild(mask);
-            });
-        };
-
-
-
 //一键复制
 // 选择所有带有 copybutton 类的元素
 document.querySelectorAll('.copybutton').forEach(button => {
