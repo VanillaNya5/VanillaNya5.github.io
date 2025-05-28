@@ -75,6 +75,77 @@
 <div class="inbody">
 </div>
 <script>
+function createHearts(count = 8) {
+            const container = document.createElement('div');
+            Object.assign(container.style, {
+                position: 'fixed',
+                top: '0',
+                left: '0',
+                width: '100%',
+                height: '100%',
+                pointerEvents: 'none',
+                zIndex: '999'
+            });
+            document.body.appendChild(container);
+
+            class Heart {
+                constructor() {
+                    this.el = document.createElement('div');
+                    this.el.innerHTML = '❤';
+                    Object.assign(this.el.style, {
+                        position: 'absolute',
+                        fontSize: `${12 + Math.random() * 18}px`,
+                        color: `hsl(${Math.random()*360}, 70%, 60%)`,
+                        willChange: 'transform'
+                    });
+
+                    // 调整后的速度参数
+                    this.x = Math.random() * innerWidth;
+                    this.y = -100;
+                    this.vx = (Math.random() - 0.5) * 3;  // 减小水平速度
+                    this.vy = 1 + Math.random() * 1;     // 减小垂直初速度
+                    this.gravity = 0.1;                 // 减小重力加速度
+                    this.rotateSpeed = Math.random() * 0.8 + 0.2;
+                    
+                    container.appendChild(this.el);
+                }
+
+                update() {
+                    this.vy += this.gravity;
+                    this.x += this.vx;
+                    this.y += this.vy;
+                    
+                    this.el.style.transform = `
+                        translate(${this.x}px, ${this.y}px)
+                        rotate(${this.x * this.rotateSpeed}deg)
+                    `;
+
+                    return this.y < innerHeight + 200;
+                }
+            }
+
+            // 创建爱心实例
+            const hearts = Array.from({ length: count }, () => new Heart());
+
+            // 动画循环
+            function animate() {
+                hearts.forEach((heart, index) => {
+                    if (!heart.update()) {
+                        container.removeChild(heart.el);
+                        hearts.splice(index, 1);
+                    }
+                });
+
+                if (hearts.length > 0) {
+                    requestAnimationFrame(animate);
+                } else {
+                    container.remove();
+                }
+            }
+            
+            requestAnimationFrame(animate);
+}
+    
 const dialogStack = [];
         const BASE_Z_INDEX = 1000;
 
@@ -210,6 +281,7 @@ const dialogStack = [];
             
             // 加载主内容
             renderContent();
+            createHearts(12);
         }).catch(handleError);
     }).catch(handleError);
 
