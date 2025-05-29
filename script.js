@@ -1,9 +1,10 @@
-
 // 辅助函数：读取特定名称的 cookie 值
 function getCookie(name) {
     let match = document.cookie.match(new RegExp('(^| )' + name + '=([^;]+)'));
     return match ? match[2] : null;
 }
+
+
 
 // 导航栏加载逻辑
 document.addEventListener("DOMContentLoaded", function () {

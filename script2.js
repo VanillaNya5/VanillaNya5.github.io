@@ -65,3 +65,102 @@ function stopObservingAll() {
   });
   imgObserverMap.clear();
 }
+
+
+const dialogStack = [];
+const BASE_Z_INDEX = 1000;
+
+function createDialog(options) {
+  return new Promise((resolve) => {
+  // 计算层级
+  const zIndex = BASE_Z_INDEX + dialogStack.length * 2;
+                
+  // 创建遮罩层
+  const mask = document.createElement('div');
+  mask.className = 'dialog-mask';
+  mask.style.zIndex = zIndex;
+
+  // 创建对话框主体
+  const dialog = document.createElement('div');
+  dialog.className = 'dialog-box';
+  dialog.style.zIndex = zIndex + 1;
+
+  // 标题
+  if (options.title) {
+    const title = document.createElement('h3');
+    title.style.marginTop = '0';
+    title.textContent = options.title;
+    dialog.appendChild(title);
+  }
+
+  // 内容
+  if (options.content) {
+    const content = document.createElement('p');
+    content.textContent = options.content;
+    dialog.appendChild(content);
+  }
+
+  const buttonContainer = document.createElement('div');
+  buttonContainer.className = 'dialog-buttons';
+
+  let timers = [];
+
+  options.buttons.forEach(btn => {
+  const button = document.createElement('button');
+  button.className = 'dialog-button';
+  button.textContent = btn.text;
+  button.style.backgroundColor = btn.color || '#f0f0f0';
+
+  // 倒计时逻辑
+  if (typeof btn.delay === 'number' && btn.delay > 0) {
+    button.disabled = true;
+    const originalText = btn.text;
+    let countdown = btn.delay;
+
+    const update = () => {
+      button.textContent = `${originalText} (${countdown}s)`;
+      if (countdown <= 0) {
+        clearInterval(timer);
+        button.disabled = false;
+        button.textContent = originalText;
+        return;
+      }
+      countdown--;
+    };
+
+    const timer = setInterval(update, 1000);
+    timers.push(timer);
+    update();
+  }
+
+  // 按钮点击事件
+  button.onclick = () => {
+    cleanup();
+    resolve(btn.value);
+  };
+
+  buttonContainer.appendChild(button);
+  });
+
+  dialog.appendChild(buttonContainer);
+  mask.appendChild(dialog);
+  document.body.appendChild(mask);
+  dialogStack.push({ mask, timers });
+
+  // 背景点击事件
+  mask.onclick = (e) => {
+  if (e.target === mask && options.backgroundClose !== false) {
+    cleanup();
+    resolve(options.backgroundValue || 'background');
+  }
+  };
+
+  // 清理函数
+  const cleanup = () => {
+    timers.forEach(clearInterval);
+    mask.remove();
+    const index = dialogStack.findIndex(d => d.mask === mask);
+    if (index > -1) dialogStack.splice(index, 1);
+  };
+  });
+}
