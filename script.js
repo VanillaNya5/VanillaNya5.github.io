@@ -114,7 +114,7 @@ a.textContent = '本网站由"VanillaNya5"制作';
 muban.appendChild(a);
 
 const b = document.createElement('p');//创建元素
-b.textContent = '©2024 保留所有权利.';
+b.textContent = '©2025 保留所有权利.';
 muban.appendChild(b);
 
 // 获取页脚元素
