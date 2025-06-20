@@ -18,30 +18,60 @@
     <h1>赤石之旅更新日志</h1>
     <a href="/chishizhilv/wiki/wiki.html">Wiki链接</a>
     <p>目前仍在制作阶段且未发布任何demo，请耐心等待~</p>
+    <label>
+        <input type="checkbox" name="devEventToggle" class="dev-event-toggle">
+        开发事件显示
+    </label>
     <hr>
     <h3>Version暂无版本</h3>
     <h3>Alpha</h3>
-    <a href="https://pd.qq.com/s/bvk1zi1fv?b=2">0.7.1</a><br>
-    <a href="https://pd.qq.com/s/fq3ugofxx?b=2">0.7 - 大型混合更新</a><br>
-     <a href="https://pd.qq.com/s/3joar8o7g?b=2">0.6.1 - 负面状态更新</a><br>
-    <a href="https://pd.qq.com/s/1trnahzlh?b=2">0.6 fixed</a><br>
-    <a href="https://pd.qq.com/s/dvqgc53gq?b=2">0.6 - 大型混合更新</a><br>
-    <a href="https://pd.qq.com/s/3cvblyrie?b=2">白脸基本退出开发</a>
+    <div class="fold show">
+        <a href="https://pd.qq.com/s/bvk1zi1fv?b=2">0.7.1</a><br>
+        <a href="https://pd.qq.com/s/fq3ugofxx?b=2">0.7 - 大型混合更新</a><br>
+    </div>
+    <div class="fold show">
+        <a href="https://pd.qq.com/s/3joar8o7g?b=2">0.6.1 - 负面状态更新</a><br>
+        <a href="https://pd.qq.com/s/1trnahzlh?b=2">0.6 fixed</a><br>
+        <a href="https://pd.qq.com/s/dvqgc53gq?b=2">0.6 - 大型混合更新</a><br>
+    </div>
+    <a data-dev-event href="https://pd.qq.com/s/3cvblyrie?b=2">白脸基本退出开发</a>
     <a href="https://pd.qq.com/s/b5ozl4ijf?b=2">0.5</a><br>
-    <a href="https://pd.qq.com/s/73k31rekj?b=2">0.4.4</a><br>
-    <a href="https://pd.qq.com/s/gdty9ggvz?b=2">0.4.3</a><br>
-    <a href="https://pd.qq.com/s/8ppn5s4tf?b=2">0.4.2</a><br>
-    <a href="https://pd.qq.com/s/homc4fkbs?b=2">0.4.1</a><br>
-    <a href="https://pd.qq.com/s/9rdfhmqhi?b=2">0.4</a><br>
-    <a href="https://pd.qq.com/s/hdxyc8t2c?b=2">0.3.1</a><br>
-    <a href="https://pd.qq.com/s/6ihp2mpm0?b=2">0.3</a><br>
+    <div class="fold show">
+        <a href="https://pd.qq.com/s/73k31rekj?b=2">0.4.4</a><br>
+        <a href="https://pd.qq.com/s/gdty9ggvz?b=2">0.4.3</a><br>
+        <a href="https://pd.qq.com/s/8ppn5s4tf?b=2">0.4.2</a><br>
+        <a href="https://pd.qq.com/s/homc4fkbs?b=2">0.4.1</a><br>
+        <a href="https://pd.qq.com/s/9rdfhmqhi?b=2">0.4</a><br>
+    </div>
+    <div class="fold show">
+        <a href="https://pd.qq.com/s/hdxyc8t2c?b=2">0.3.1</a><br>
+        <a href="https://pd.qq.com/s/6ihp2mpm0?b=2">0.3</a><br>
+    </div>
     <a href="https://pd.qq.com/s/7m5tzuvaf?b=2">0.2</a><br>
-    <a href="https://pd.qq.com/s/9eipnltty?b=2">0.1.2</a><br>
-    <a href="https://pd.qq.com/s/6y4mija3y?b=2">0.1.1</a><br>
-    <a href="https://pd.qq.com/s/gzq1s8avd?b=2">0.1</a><br>
+    <div class="fold show">
+        <a href="https://pd.qq.com/s/9eipnltty?b=2">0.1.2</a><br>
+        <a href="https://pd.qq.com/s/6y4mija3y?b=2">0.1.1</a><br>
+        <a href="https://pd.qq.com/s/gzq1s8avd?b=2">0.1</a><br>
+    </div>
     <p>远古版本无记录</p>
 
 </div>
+<script>
+// 使用开关控制所有带 data-dev-event 的元素显示
+document.addEventListener('DOMContentLoaded', function() {
+    const toggle = document.querySelector('.dev-event-toggle');
+    const devEventElements = document.querySelectorAll('[data-dev-event]');
+    toggle.addEventListener('change', function() {
+        devEventElements.forEach(el => {
+            el.style.display = this.checked ? 'block' : 'none';
+        });
+    });
+    // 默认关闭
+    devEventElements.forEach(el => {
+        el.style.display = 'none';
+    });
+});
+</script>
 <div id="muban2"></div>
 </body>
 <footer>

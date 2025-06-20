@@ -227,6 +227,13 @@ function normalizeUrl(url) {
 
 const currentUrl = normalizeUrl(window.location.href);
 
+// 为所有超链接添加 rel="noopener noreferrer"
+document.addEventListener("DOMContentLoaded", function () {
+    document.querySelectorAll('a').forEach(function(link) {
+        link.setAttribute('rel', 'noopener noreferrer');
+    });
+});
+
 // 使用事件委托，确保动态生成的链接也能正确处理
 document.addEventListener('click', function(event) {
     const link = event.target.closest('a'); // 检查点击的是否是链接

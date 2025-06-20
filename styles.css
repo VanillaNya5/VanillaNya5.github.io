@@ -220,6 +220,7 @@ body {
 }
 
 .fold.show {
+    margin: 5px;
     max-height: 2000px; /* 设置一个适合的最大高度，确保内容可以完整显示 */
     opacity: 1; /* 显示内容 */
     padding-left: 7px; /* 向右移动5px */
@@ -387,4 +388,14 @@ footer {
 .custom-menu li:hover {
     background-color: #dbdbdb; /* 鼠标悬停时的背景颜色 */
     border-radius: 5px; /* 鼠标悬停时添加圆角效果 */
+}
+
+.group {
+    content: ''; /* 创建一个空内容 */
+    position: absolute; /* 绝对定位 */
+    left: 1px; /* 根据需要设置竖线的位置 */
+    top: 0; /* 从顶部开始 */
+    bottom: 0; /* 延伸到底部 */
+    width: 2px; /* 设置竖线的宽度 */
+    background-color: black; /* 设置竖线的颜色 */
 }
