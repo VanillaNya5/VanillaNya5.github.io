@@ -249,42 +249,62 @@ document.addEventListener('click', function(event) {
 
 
 if (!getCookie('toTopDisable')) {
-//回顶部
-const totop = document.createElement('div');//创建容器
-totop.id = 'toTop';
-totop.title = '点我可以快速到达顶部哦';
-muban2.appendChild(totop);
-const totoptext = document.createElement('p');//创建元素
-totop.textContent = '点我回顶部';
-totop.appendChild(totoptext);
+    // 回顶部
+    const totop = document.createElement('div');
+    totop.id = 'toTop';
+    totop.title = '点我可以快速到达顶部哦';
+    totop.textContent = '点我回顶部';
+    muban2.appendChild(totop);
 
+    var toTop = document.querySelector("#toTop");
+    toTop.style.display = "none"; // 初始隐藏
 
-var toTop = document.querySelector("#toTop");    
-    toTop.style.display = "none";// 一开始div隐藏  
-    window.addEventListener("scroll", scrollHandler);// 然后给window加事件监听，滚动条大于某个值时，div出现
-    function scrollHandler(e) {        
-        var distanceY = document.documentElement.scrollTop || document.body.scrollTop;//兼容写法，获取当前页面y轴的滚动距离
-        if (distanceY > 100) {
+    // 滚动监听
+    window.addEventListener("scroll", scrollHandler);
+
+    function scrollHandler() {
+        var distanceY = document.documentElement.scrollTop || document.body.scrollTop;
+        if (distanceY > 200) {
             toTop.style.display = "block";
+            if (isFooterImageFullyVisible()) {
+                toTop.classList.add('fade-out');
+            } else {
+                toTop.classList.remove('fade-out');
+            }
         } else {
+            toTop.classList.remove('fade-out');
             toTop.style.display = "none";
         }
     }
-    // 然后给div添加点击事件，用计时器interval来循环，步长为5，scrollTop依次减5，时间每50ms循环一次，直到scrollTop为0清除计时器
-    toTop.addEventListener("click", clickHandler);
-    function clickHandler(e) {
+
+    // 动画结束后彻底隐藏
+    toTop.addEventListener('transitionend', function() {
+        if (toTop.classList.contains('fade-out')) {
+            toTop.style.display = "none";
+        }
+    });
+
+    // 回顶部点击事件
+    toTop.addEventListener("click", function() {
         let timer = setInterval(function () {
-            var distanceY = document.documentElement.scrollTop || document.body.scrollTop;//兼容
+            var distanceY = document.documentElement.scrollTop || document.body.scrollTop;
             if (distanceY == 0){
                 clearInterval(timer);
                 return;
-            } 
-            var speed = Math.ceil(distanceY/16);//speed这个值从高变低，那么scrollTop就减得从快到慢，上回到顶部的速度就先快后慢
-            document.documentElement.scrollTop=distanceY-speed;
-            // document.documentElement.scrollTop=distanceY-5;//如果给速度一个确定的值，那回到顶部的就匀速
+            }
+            var speed = Math.ceil(distanceY/16);
+            document.documentElement.scrollTop = distanceY - speed;
         }, 16);
-    }
+    });
 }
 
-// 页脚图片绑定点击事件
-bodyImage.addEventListener('click', clickHandler);
+// 判断页脚图片是否完全显示
+function isFooterImageFullyVisible() {
+    const rect = bodyImage.getBoundingClientRect();
+    return rect.bottom <= window.innerHeight && rect.right <= window.innerWidth;
+}
+
+// 页脚图片绑定回顶部事件
+bodyImage.addEventListener('click', function() {
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+});

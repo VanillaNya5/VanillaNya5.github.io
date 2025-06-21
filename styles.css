@@ -399,3 +399,7 @@ footer {
     width: 2px; /* 设置竖线的宽度 */
     background-color: black; /* 设置竖线的颜色 */
 }
+
+*[b] {
+    font-weight: bold;
+}

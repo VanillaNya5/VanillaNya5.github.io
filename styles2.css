@@ -10,6 +10,14 @@
     bottom: 130px;
     right: 20px;
     cursor: pointer; /* 鼠标悬停时变为指针 */
+    transition: opacity 0.2s;
+    opacity: 1;
+    
+}
+
+#toTop.fade-out {
+    opacity: 0;
+    pointer-events: none;
 }
 
 #toTop:hover {
